@@ -33,17 +33,15 @@ namespace Dependency_Injection.Controllers
         };
 
        
+
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        // Action Injection: injecting the services into an Action Method. The services is resolved only when this endpoint is called
+        // and not when this controller class is created (as it will be creating all the dependecies injected through its Ctor).
+        public IActionResult Get([FromServices]IWeatherFocaster weather)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var season = weather.GetSeason();
+
+            return Ok(season);
         }
 
         [HttpGet("rules")]

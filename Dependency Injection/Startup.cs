@@ -32,6 +32,8 @@ namespace Dependency_Injection
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddTransient<AppDbContext>();
+
             services.AddTransient<IWeatherFocaster, WeatherFocaster>();
             services.AddTransient<IWeatherFocaster, AmazingWeatherFocaster>();
             // doesn't register if an implementation already existfor the type.
